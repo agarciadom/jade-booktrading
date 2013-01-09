@@ -23,16 +23,28 @@ Boston, MA  02111-1307, USA.
 
 package examples.bookTrading;
 
-import jade.core.AID;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
   @author Giovanni Caire - TILAB
  */
 class BookSellerGui extends JFrame {	
+	private static final long serialVersionUID = 1L;
+
 	private BookSellerAgent myAgent;
 	
 	private JTextField titleField, priceField;

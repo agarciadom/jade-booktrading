@@ -35,15 +35,17 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import java.util.*;
 
 public class BookSellerAgent extends Agent {
+	private static final long serialVersionUID = 1L;
+
 	// The catalogue of books for sale (maps the title of a book to its price)
-	private Hashtable catalogue;
+	private Hashtable<String, Integer> catalogue;
 	// The GUI by means of which the user can add books in the catalogue
 	private BookSellerGui myGui;
 
 	// Put agent initializations here
 	protected void setup() {
 		// Create the catalogue
-		catalogue = new Hashtable();
+		catalogue = new Hashtable<String, Integer>();
 
 		// Create and show the GUI 
 		myGui = new BookSellerGui(this);
@@ -79,8 +81,10 @@ public class BookSellerAgent extends Agent {
 		catch (FIPAException fe) {
 			fe.printStackTrace();
 		}
+
 		// Close the GUI
 		myGui.dispose();
+
 		// Printout a dismissal message
 		System.out.println("Seller-agent "+getAID().getName()+" terminating.");
 	}
@@ -90,9 +94,14 @@ public class BookSellerAgent extends Agent {
 	 */
 	public void updateCatalogue(final String title, final int price) {
 		addBehaviour(new OneShotBehaviour() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public void action() {
 				catalogue.put(title, new Integer(price));
-				System.out.println(title+" inserted into catalogue. Price = "+price);
+				System.out.println(title + " inserted into catalogue. Price = " + price);
 			}
 		} );
 	}
@@ -106,6 +115,8 @@ public class BookSellerAgent extends Agent {
 	   sent back.
 	 */
 	private class OfferRequestsServer extends CyclicBehaviour {
+		private static final long serialVersionUID = 1L;
+
 		public void action() {
 			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
 			ACLMessage msg = myAgent.receive(mt);
@@ -142,6 +153,8 @@ public class BookSellerAgent extends Agent {
 	   purchase has been sucesfully completed.
 	 */
 	private class PurchaseOrdersServer extends CyclicBehaviour {
+		private static final long serialVersionUID = 1L;
+
 		public void action() {
 			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
 			ACLMessage msg = myAgent.receive(mt);

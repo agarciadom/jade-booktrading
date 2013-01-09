@@ -34,6 +34,8 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class BookBuyerAgent extends Agent {
+	private static final long serialVersionUID = 1L;
+
 	// The title of the book to buy
 	private String targetBookTitle;
 	// The list of known seller agents
@@ -41,8 +43,8 @@ public class BookBuyerAgent extends Agent {
 
 	// Put agent initializations here
 	protected void setup() {
-		// Printout a welcome message
-		System.out.println("Hallo! Buyer-agent "+getAID().getName()+" is ready.");
+		// Print a welcome message
+		System.out.println("Hello! Buyer-agent "+getAID().getName()+" is ready.");
 
 		// Get the title of the book to buy as a start-up argument
 		Object[] args = getArguments();
@@ -50,8 +52,10 @@ public class BookBuyerAgent extends Agent {
 			targetBookTitle = (String) args[0];
 			System.out.println("Target book is "+targetBookTitle);
 
-			// Add a TickerBehaviour that schedules a request to seller agents every minute
+			// Add a TickerBehaviour that schedules a request for seller agents every minute
 			addBehaviour(new TickerBehaviour(this, 60000) {
+				private static final long serialVersionUID = 1L;
+
 				protected void onTick() {
 					System.out.println("Trying to buy "+targetBookTitle);
 					// Update the list of seller agents
@@ -96,6 +100,8 @@ public class BookBuyerAgent extends Agent {
 	   agents the target book.
 	 */
 	private class RequestPerformer extends Behaviour {
+		private static final long serialVersionUID = 1L;
+
 		private AID bestSeller; // The agent who provides the best offer 
 		private int bestPrice;  // The best offered price
 		private int repliesCnt = 0; // The counter of replies from seller agents
@@ -112,7 +118,7 @@ public class BookBuyerAgent extends Agent {
 				} 
 				cfp.setContent(targetBookTitle);
 				cfp.setConversationId("book-trade");
-				cfp.setReplyWith("cfp"+System.currentTimeMillis()); // Unique value
+				cfp.setReplyWith("cfp" + System.currentTimeMillis()); // Unique value
 				myAgent.send(cfp);
 				// Prepare the template to get proposals
 				mt = MessageTemplate.and(MessageTemplate.MatchConversationId("book-trade"),
@@ -151,8 +157,10 @@ public class BookBuyerAgent extends Agent {
 				order.setConversationId("book-trade");
 				order.setReplyWith("order"+System.currentTimeMillis());
 				myAgent.send(order);
+
 				// Prepare the template to get the purchase order reply
-				mt = MessageTemplate.and(MessageTemplate.MatchConversationId("book-trade"),
+				mt = MessageTemplate.and(
+						MessageTemplate.MatchConversationId("book-trade"),
 						MessageTemplate.MatchInReplyTo(order.getReplyWith()));
 				step = 3;
 				break;
@@ -163,8 +171,10 @@ public class BookBuyerAgent extends Agent {
 					// Purchase order reply received
 					if (reply.getPerformative() == ACLMessage.INFORM) {
 						// Purchase successful. We can terminate
-						System.out.println(targetBookTitle+" successfully purchased from agent "+reply.getSender().getName());
-						System.out.println("Price = "+bestPrice);
+						System.out.println(targetBookTitle
+								+ " successfully purchased from agent "
+								+ reply.getSender().getName());
+						System.out.println("Price = " + bestPrice);
 						myAgent.doDelete();
 					}
 					else {
