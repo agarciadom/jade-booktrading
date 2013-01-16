@@ -11,11 +11,7 @@ Usage
 
 To try JADE with this example, follow these steps:
 
-1. Compile the code with
-
-       mvn compile
-
-2. Open a terminal and run the main agent container with
+1. Open a terminal and run the main agent container with
 
        ./start-main-container.sh
 
@@ -25,7 +21,7 @@ To try JADE with this example, follow these steps:
 
    Leave the terminal open.
 
-3. Open another terminal at at any machine in your LAN (possibly the
+2. Open another terminal at at any machine in your LAN (possibly the
    same one as in the previous step) and run one or more seller agents
    with
 
@@ -40,8 +36,8 @@ To try JADE with this example, follow these steps:
    of all the books that can be sold by that agent. Keep entering as
    many names and prices as you want.
 
-4. Once all the books have been entered, open yet another terminal
-   (you catch the drift :-D) and run the buyer agent with
+3. Once all the books have been entered, open yet another terminal
+   and run the buyer agent with
 
        ./start-buyer.sh host agentname bookname
 
@@ -49,7 +45,7 @@ To try JADE with this example, follow these steps:
    'bookname' is the name of the book that the agent should get for
    as cheap as possible.
 
-5. The buyer will ask the Directory Facilitator every minute for a list
+4. The buyer will ask the Directory Facilitator every minute for a list
    of all the sellers, and will ask them to sell the wanted book for a
    certain price. The price will slowly go up in time, and the agent will
    finish its execution as soon as one of the seller agents accepts the
@@ -58,15 +54,13 @@ To try JADE with this example, follow these steps:
 tl;dr
 -----
 
-1. mvn compile
+1. ./start-main-container.sh
 
-2. ./start-main-container.sh
+2. ./start-seller.sh localhost s1
 
-3. ./start-seller.sh localhost s1
+3. Enter some books
 
-4. Enter some books
+4. ./start-buyer.sh localhost b1 MyBook
 
-5. ./start-buyer.sh localhost b1 MyBook
-
-6. Wait a minute for the buyer to ask for the list of sellers
+5. Wait a minute for the buyer to ask for the list of sellers
    and ask for a deal
