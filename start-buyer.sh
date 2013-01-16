@@ -10,6 +10,6 @@ AGENT=$2
 BOOK=$3
 AGENT_CLASS=examples.bookTrading.BookBuyerAgent
 
-mvn exec:java \
+mvn compile exec:java \
     -Dexec.mainClass=jade.Boot \
     -Dexec.args="-container -host $HOST -agents '$AGENT:$AGENT_CLASS($BOOK)'"
